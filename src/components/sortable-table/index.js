@@ -15,16 +15,20 @@ export default class SortableTable {
     const { bottom } = this.element.getBoundingClientRect();
     const { id, order } = this.sorted;
 
-    if (bottom < document.documentElement.clientHeight && !this.loading && !this.sortLocally) {
+    if (bottom < document.documentElement.clientHeight && !this.loading && !this.isSortLocally) {
+
       this.start = this.end;
       this.end = this.start + this.step;
 
       this.loading = true;
 
       const data = await this.loadData(id, order, this.start, this.end);
-      this.update(data);
-
-      this.loading = false;
+      if(!data || data.length === 0){
+        this.loading = true;
+      } else {
+       this.update(data);
+       this.loading = false;
+      }
     }
   };
 
@@ -54,7 +58,10 @@ export default class SortableTable {
       if (this.isSortLocally) {
         this.sortLocally(id, newOrder);
       } else {
-        this.sortOnServer(id, newOrder, 1, 1 + this.step);
+        this.loading = false;
+        this.start = 1;
+        this.end = this.start + this.step;
+        this.sortOnServer(id, newOrder, this.start, this.end);
       }
     }
   };

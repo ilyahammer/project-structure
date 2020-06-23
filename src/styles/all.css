@@ -13,5 +13,7 @@
 
 /* Styles for pages  */
 /* pages */
+@import url("../pages/products/list/style.css");
+@import url("../pages/categories/style.css");
 @import url("../pages/style.css");
 @import url("../pages/dashboard/style.css");

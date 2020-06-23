@@ -58,7 +58,7 @@ export default class Page {
       data: ordersData,
       label: 'orders',
       value: ordersData.reduce((accum, item) => accum + item),
-      link: '#'
+      link: '/sales'
     });
 
     const salesChart = new ColumnChart({
